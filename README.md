@@ -120,3 +120,7 @@ instaladores como artefatos de build.
 - React e TypeScript
 - Asciidoctor.js
 - Rust
+
+## Licença
+
+Este projeto está sob a licença [MIT](LICENSE).

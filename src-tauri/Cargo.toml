@@ -2,6 +2,7 @@
 name = "appasciidoc"
 version = "0.1.0"
 description = "Editor leve de AsciiDoc com edicao inline e workspace de notas"
+license = "MIT"
 authors = ["AppAsciiDoc"]
 edition = "2021"
 rust-version = "1.77"

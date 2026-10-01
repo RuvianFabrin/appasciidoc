@@ -2,6 +2,7 @@
   "name": "appasciidoc",
   "private": true,
   "version": "0.1.0",
+  "license": "MIT",
   "type": "module",
   "description": "Editor leve de AsciiDoc com edicao inline, workspace de notas e exportacao HTML/PDF.",
   "scripts": {
