@@ -1,0 +1,3 @@
+# As fontes (Inter, JetBrains Mono, Material Symbols) sao baixadas do Google
+# pelo script scripts/fetch-assets.mjs na Fase 9 (tarefa 67) e ficam aqui.
+# Nao versionar os .woff2 - ver .gitignore.

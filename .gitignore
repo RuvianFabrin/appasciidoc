@@ -1,0 +1,29 @@
+# dependencias
+/node_modules
+/.pnp
+.pnp.js
+
+# build frontend
+/dist
+/dist-ssr
+*.local
+
+# build Rust / Tauri
+/src-tauri/target
+/src-tauri/gen/schemas
+
+# assets baixados no build (fontes/icones Google) - ver scripts/fetch-assets.mjs
+/src/assets/fonts/*
+!/src/assets/fonts/.gitkeep
+
+# editor / SO
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
