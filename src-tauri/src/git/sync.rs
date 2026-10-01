@@ -147,7 +147,7 @@ fn make_preview(
             .graph_ahead_behind(local_commit.id(), theirs.id())
             .map_err(|e| format!("Não foi possível comparar branches: {e}"))?
     } else {
-        (local_commit.parent_count() as usize, 0)
+        (local_commit.parent_count(), 0)
     };
     if let Some(reference) = upstream {
         let theirs = reference
