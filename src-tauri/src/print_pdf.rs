@@ -355,7 +355,7 @@ mod linux_impl {
                     settings.set("output-file-format", Some("pdf"));
                     let op = PrintOperation::new(wv);
                     op.set_print_settings(&settings);
-                    let _ = op.print();
+                    op.print();
                     let _ = tx2.send(Ok(()));
                 }
             });
