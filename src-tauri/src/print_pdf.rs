@@ -318,7 +318,7 @@ mod windows_impl {
 mod linux_impl {
     pub fn print(app: tauri::AppHandle, html: String, out_path: String) -> Result<(), String> {
         use std::sync::mpsc;
-        use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
+        use tauri::{WebviewUrl, WebviewWindowBuilder};
         use webkit2gtk::{PrintOperation, PrintOperationExt, WebViewExt};
 
         let nanos = std::time::SystemTime::now()
@@ -355,10 +355,8 @@ mod linux_impl {
                     settings.set("output-file-format", Some("pdf"));
                     let op = PrintOperation::new(wv);
                     op.set_print_settings(&settings);
-                    let r = match op.print() {
-                        _ => Ok(()),
-                    };
-                    let _ = tx2.send(r);
+                    let _ = op.print();
+                    let _ = tx2.send(Ok(()));
                 }
             });
         })
