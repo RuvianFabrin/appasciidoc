@@ -41,7 +41,6 @@ a { color: inherit; text-decoration: underline; }
 ${opts.toc ? '.toc { break-after: page; }' : ''}
 ${opts.pageBreakBeforeH1 ? '.preview.export > h1:not(:first-child) { break-before: page; }' : ''}
 ${opts.pageBreakBeforeH1 ? '.preview.export > .sect1 > h2 { break-before: page; }' : ''}
-@media print { a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .8em; color: #666; } }
 `;
 }
 

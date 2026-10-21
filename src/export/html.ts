@@ -124,7 +124,7 @@ export async function renderExportBody(
   notes: NoteInfo[],
   opts: ExportBodyOptions,
 ): Promise<{ body: HTMLElement; title: string }> {
-  const prepared = preprocessWikilinks(source, notes, notePath);
+  const prepared = preprocessExportImages(preprocessWikilinks(source, notes, notePath));
   const baseDir = notePath ? notePath.replace(/[\\/][^\\/]*$/, '') : null;
 
   const attributes: Record<string, string> = {};
@@ -154,6 +154,41 @@ export async function renderExportBody(
   const titleEl = body.querySelector('h1');
   const title = (titleEl?.textContent || baseName(notePath ?? 'documento')).trim();
   return { body, title };
+}
+
+/**
+ * Export also accepts image macros pasted into the middle of a paragraph.
+ * AsciiDoc block macros (`image::`) only work on a line of their own, so use
+ * the inline form there. Spaces in attachment paths are URI-encoded so the
+ * parser keeps the full filename as the image target.
+ */
+function preprocessExportImages(source: string): string {
+  const delimitedBlocks = new Set(['----', '....', '++++', '____', '****', '====', '--']);
+  let activeDelimiter: string | null = null;
+  return source.split(/(\r?\n)/).map((part, index) => {
+    if (index % 2 === 1) return part;
+    const line = part;
+    const trimmed = line.trim();
+    if (activeDelimiter) {
+      if (trimmed === activeDelimiter) activeDelimiter = null;
+      return line;
+    }
+    if (delimitedBlocks.has(trimmed)) {
+      activeDelimiter = trimmed;
+      return line;
+    }
+    return line.replace(
+      /image::([^\[\]\r\n]+)\[([^\]\r\n]*)\]/g,
+      (macro, rawTarget: string, attrs: string, offset: number) => {
+        const target = rawTarget.trim();
+        if (!target) return macro;
+        const before = line.slice(0, offset);
+        const isStandalone = before.trim() === '' && line.slice(offset + macro.length).trim() === '';
+        const encodedTarget = target.replace(/ /g, '%20');
+        return `${isStandalone ? 'image::' : 'image:'}${encodedTarget}[${attrs}]`;
+      },
+    );
+  }).join('');
 }
 
 export function escapeHtml(s: string): string {

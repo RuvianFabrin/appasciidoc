@@ -26,6 +26,7 @@ struct Labels {
     reload: &'static str,
     export_html: &'static str,
     export_pdf: &'static str,
+    export_site: &'static str,
     close_tab: &'static str,
     close_window: &'static str,
     undo: &'static str,
@@ -64,6 +65,7 @@ fn labels(language: &str) -> Labels {
             reload: "Reload from disk",
             export_html: "Export as HTML…",
             export_pdf: "Export as PDF…",
+            export_site: "Export workspace as site…",
             close_tab: "Close tab",
             close_window: "Close window",
             undo: "Undo",
@@ -99,6 +101,7 @@ fn labels(language: &str) -> Labels {
             reload: "Recargar desde el disco",
             export_html: "Exportar como HTML…",
             export_pdf: "Exportar como PDF…",
+            export_site: "Exportar el espacio de trabajo como sitio…",
             close_tab: "Cerrar pestaña",
             close_window: "Cerrar ventana",
             undo: "Deshacer",
@@ -134,6 +137,7 @@ fn labels(language: &str) -> Labels {
             reload: "从磁盘重新加载",
             export_html: "导出为 HTML…",
             export_pdf: "导出为 PDF…",
+            export_site: "将工作区导出为网站…",
             close_tab: "关闭标签页",
             close_window: "关闭窗口",
             undo: "撤销",
@@ -169,6 +173,7 @@ fn labels(language: &str) -> Labels {
             reload: "Recarregar do disco",
             export_html: "Exportar para HTML…",
             export_pdf: "Exportar para PDF…",
+            export_site: "Exportar workspace como site…",
             close_tab: "Fechar aba",
             close_window: "Fechar janela",
             undo: "Desfazer",
@@ -213,6 +218,7 @@ pub fn install<R: Runtime>(app: &AppHandle<R>, language: &str) -> tauri::Result<
         .separator()
         .item(&item(app, "export.html", l.export_html))
         .item(&item(app, "export.pdf", l.export_pdf))
+        .item(&item(app, "export.site", l.export_site))
         .separator()
         .item(&item(app, "tab.close", l.close_tab))
         .item(&PredefinedMenuItem::close_window(

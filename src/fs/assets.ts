@@ -18,9 +18,16 @@ function joinAndNormalize(dir: string, rel: string): string {
 
 /** `notePath` = caminho absoluto da nota aberta; `ref` = alvo do `image::`. */
 export function assetUrl(notePath: string | null, ref: string): string {
-  const r = ref.trim();
+  let r = ref.trim();
   if (!r || /^(https?:|data:|asset:|blob:|tauri:|file:)/i.test(r)) return r;
   if (!isTauri || !notePath) return r;
+  // Targets AsciiDoc may encode spaces and other URI characters. Decode them
+  // before turning the local path into a Tauri asset URL.
+  try {
+    r = decodeURIComponent(r);
+  } catch {
+    // Keep the original reference if it contains malformed percent escapes.
+  }
   const dir = notePath.replace(/[\\/][^\\/]*$/, '');
   try {
     return convertFileSrc(joinAndNormalize(dir, r));
